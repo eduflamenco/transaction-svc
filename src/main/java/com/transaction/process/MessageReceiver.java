@@ -1,5 +1,6 @@
 package com.transaction.process;
 
+import com.rabbitmq.client.GetResponse;
 import com.transaction.configuration.RabbitConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,17 @@ public class MessageReceiver {
 
     public List<String> receiveMessage() {
         List<String> messages = new ArrayList<>();
+        boolean next = true;
         try{
-            while (true) {
-                var received = (String)rabbitTemplate.receiveAndConvert(RabbitConfig.QUEUE_NAME);
-                if(received != null)
-                    messages.add(received);
-                else
-                    break;
+            while (next) {
+                next = Boolean.TRUE.equals(rabbitTemplate.execute(channel -> {
+                    GetResponse response = channel.basicGet(RabbitConfig.QUEUE_NAME, true);
+                    if (response != null) {
+                        messages.add(new String(response.getBody()));
+                        return true;
+                    }
+                    return false;
+                }));
             }
 
             if (messages.isEmpty())

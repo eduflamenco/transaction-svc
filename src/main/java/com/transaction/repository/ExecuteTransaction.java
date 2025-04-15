@@ -3,7 +3,7 @@ package com.transaction.repository;
 import com.transaction.entity.Account;
 import com.transaction.entity.Client;
 import com.transaction.entity.Entry;
-import com.transaction.pojo.Transaction;
+import com.transaction.pojo.TransactionRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +26,7 @@ public class ExecuteTransaction {
     }
 
     @Transactional
-    public String execute(Transaction transaction) {
+    public String execute(TransactionRequest transaction) {
         try {
             Client client = clientRepo.findByUsername(transaction.user());
             if ( client!= null){
@@ -47,7 +47,7 @@ public class ExecuteTransaction {
         return "Transaction executed successfully";
     }
 
-    private com.transaction.entity.Transaction buildNewTransactionRecord(Transaction transaction, Client client, Account fromAcc, Account toAcc){
+    private com.transaction.entity.Transaction buildNewTransactionRecord(TransactionRequest transaction, Client client, Account fromAcc, Account toAcc){
         com.transaction.entity.Transaction tran = new com.transaction.entity.Transaction();
         tran.setFromAccount(fromAcc);
         tran.setToAccount(toAcc);

@@ -3,10 +3,10 @@ package com.transaction.pojo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public record Transaction(String user,
-                          Double amount,
-                          String fromAccount,
-                          String toAccount) {
+public record TransactionRequest(String user,
+                                 Double amount,
+                                 String fromAccount,
+                                 String toAccount) {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public String toString(){

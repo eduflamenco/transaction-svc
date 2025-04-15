@@ -2,8 +2,7 @@ package com.transaction.process;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.transaction.pojo.Transaction;
-import com.transaction.repository.ClientRepo;
+import com.transaction.pojo.TransactionRequest;
 import com.transaction.repository.ExecuteTransaction;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +20,12 @@ public class MakeTransaction {
     }
 
     public void makeTransaction() {
-        Transaction transaction;
+        TransactionRequest transaction;
         var received = messageReceiver.receiveMessage();
         if(!received.isEmpty()) {
             try {
                 for (var message : received) {
-                    transaction = objectMapper.readValue(message, Transaction.class);
+                    transaction = objectMapper.readValue(message, TransactionRequest.class);
                     String result = executeTransaction.execute(transaction);
                     System.out.println(result);
                 }
