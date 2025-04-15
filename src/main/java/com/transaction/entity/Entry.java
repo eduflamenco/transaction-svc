@@ -30,7 +30,7 @@ public class Entry {
     private UUID transactionId;
 
     @Column(name = "created_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
-    private LocalDateTime createdDate = LocalDateTime.now();;
+    private LocalDateTime createdDate = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "account_number", referencedColumnName = "account_number", insertable = false, updatable = false)

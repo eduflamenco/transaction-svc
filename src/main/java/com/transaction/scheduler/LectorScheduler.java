@@ -15,7 +15,7 @@ public class LectorScheduler {
         this.makeTransaction = makeTransaction;
     }
 
-    @Scheduled(initialDelay = 10000, fixedDelay = 30000) // cada 30 segundos
+    @Scheduled(/*initialDelay = 10000, */fixedDelay = 30000) // cada 30 segundos
     public void leerPeriodicamente() {
         makeTransaction.makeTransaction();
     }
