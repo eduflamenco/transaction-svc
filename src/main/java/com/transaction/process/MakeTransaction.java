@@ -26,6 +26,7 @@ public class MakeTransaction {
             try {
                 for (var message : received) {
                     transaction = objectMapper.readValue(message, TransactionRequest.class);
+                    System.out.println("Mensjae leido: "+ transaction);
                     String result = executeTransaction.execute(transaction);
                     System.out.println(result);
                 }
